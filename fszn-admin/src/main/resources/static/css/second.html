@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐游宜秀</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-jstatus-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="../css/style1.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var id = getQueryVariable("id");
+            $.get("../business/eat.do?id=" + id, function (result) {
+                var content = result.content;
+                var str = "";
+
+
+                $.each(content, function (index, obj) {
+                    var count = obj.discounts[0].dis_size;
+
+
+                    var count2 = count * 10;
+
+                    var count1 = count * 10 + "折"
+
+                    if (count2 == 10) {
+                        var count1 = "此商家暂无折扣"
+                    }
+
+                    if (obj.bname == "龙湫池风景区") {
+                        var count1 = "景区门票全免"
+                    }
+
+                    if (obj.bname === "安徽小龙山生态旅游发展有限公司" || obj.bname === "安庆巨石山景区") {
+                        var count1 = "门票减4元! 套票减5元"
+                    }
+                    str = str + "<a href='three.html?bid=" + obj.bid + "' class=\"aui-flex\"><div class=\"aui-price-img\"><img src='" + obj.images + "' style='height: 90%' ></div>";
+                    str = str + "<div class=\"aui-flex-box\"><h2>" + obj.bname + "</h2><div class=\"aui-chang-box\"><div class=\"aui-chang-box-one\"><span>折扣力度</span>";
+                    str = str + "</div><div class=\"aui-chang-box-two\">" + count1 + "</div></div></div></a><h2  class='btn btn-primary btn-lg' data-toggle='modal' data-target='#myModal' onclick='code(" + obj.bid + ")'>我要下单</h2>";
+                    $("#content").html(str);
+                });
+            });
+            $("#default").click(function () {
+
+                $("#xialakuang").find("option").remove();
+                $("#xialakuang").append("<option>请选择</option>");
+            });
+
+        });
+
+        function code1() {
+            var bid = $("#bid").val();
+            var money = $("#money").val();
+            //var ditype=$("#xialakuang").find("option:selected").parent().index();
+            var ditype = $("#xialakuang").find("option:selected").val();
+            $("#xialakuang").find("option").remove();
+            $("#xialakuang").append("<option>请选择</option>");
+            /*var user=$("#user").val();*/
+
+            var user = 1;
+            window.location.href = 'basic.html?user=1&bid=' + bid + '&money=' + money + '&ditype=' + ditype;
+
+
+            /*$.post("/discount/getallbusiness.do",{"user":1,"bid":bid,"money":money,"ditype":ditype},function (result) {
+
+                window.location.href = 'images3/MyQRCode.png';
+            });*/
+
+
+        }
+
+        function code(bid) {
+            /*	$("#bid").val(bid);
+                alert($("#bid").val());var str="";
+                /!*按需注入用户ID  $([user]).val(user);       *!/
+                alert(obj.discounts[0].dintro);
+                /!*$.each(obj,function (index,obj1) {
+                    str=str+"<option>"+obj1.dintro+"</option>";
+                });*!/
+                str=str+"<option>"+obj.discounts[0].dintro+"</option>";
+                $("#xialakuang").append(str);*/
+            $("#bid").val(bid);
+            $.get("../discount/getcate.do?bid=" + bid, function (result) {
+                var a = result.content;
+                var str = "";
+                $.each(a, function (index, obj) {
+
+                    str = str + "<option value=" + index + ">" + obj.dintro + "</option>";
+                });
+                $("#xialakuang").append(str);
+
+
+            });
+        }
+
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+            return (false);
+        }
+
+    </script>
+</head>
+<body>
+<!--
+
+* 17素材vip建站专区模块代码
+* 详尽信息请看官网：http://www.17sucai.com/pins/vip
+*
+* Copyright , 温州易站网络科技有限公司版权所有
+*
+* 请尊重原创，未经允许请勿转载。
+* 在保留版权的前提下可应用于个人或商业用途
+
+-->
+<section class="aui-flexView">
+
+    <header class="aui-navBar aui-navBar-fixed">
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-return"></i>
+        </a>
+        <div class="aui-center">
+            <span class="aui-center-title">五一出游玩</span>
+        </div>
+        <a href="javascript:;" class="aui-navBar-item">
+            <i class="icon icon-sys"></i>
+        </a>
+    </header>
+    <section class="aui-scrollView">
+        <div class="aui-ad-img">
+            <img src="../images1/banner.jpg" alt="">
+        </div>
+        <div class="aui-price-list">
+            <div id="content"></div>
+        </div>
+    </section>
+</section>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    请选择输入消费金额和商家折扣生成二维码
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-5 control-label">消费金额：</label>
+                        <div class="col-sm-7">
+                            <input id="money" type="text" class="form-control" placeholder="请输入您的消费金额!"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">请选择对应的折扣:</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="xialakuang">
+                                <option>请选择</option>
+                            </select>
+                        </div>
+                        <input type=hidden type="text" id="bid">
+                        <input type=hidden type="text" id="user">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input onclick="code1()" type="button" class="btn btn-default" value="生成二维码">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="default" type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</body>
+
+</html>

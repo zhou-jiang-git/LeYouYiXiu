@@ -1,0 +1,10 @@
+Application Version: ${fszn.version}
+Spring Boot Version: ${spring-boot.version}
+=>
+==>
+===>
+=====>
+======>
+=======>
+=========>
+===》别出BUG，谢谢ByZJ《===========================================================================

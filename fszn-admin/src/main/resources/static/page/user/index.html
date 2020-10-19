@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐游宜秀欢迎您</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.get("/system/business/list", function (result) {
+                var content = result.content;
+                var str = "";
+                $.each(content, function (index, obj) {
+
+                    var imgpath = obj.images.substring(3);
+
+                    str = str + "<a href='javascript:;' class='aui-list-item'><div class='aui-list-theme-message'><h2 class='aui-list-theme-title'>" + obj.bname + "</h2></div><div class='aui-list-theme-img'><img src='" + imgpath + "' style='height: 160px'></div>";
+                    str = str + "</a>";
+
+                    $("#aui-list-theme-box").html(str);
+
+                });
+
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+
+<section class="aui-flexView">
+
+    <div class="aui-flex aui-flex-infos">
+        <div class="aui-img-one">
+            <img src="images3/龙王寺2.png" style="height: 100%; width: 100%;">
+        </div>
+        <div class="aui-flex-box">
+            <p style="font-size:20px;" style="background-color:red">安庆宜秀欢迎您</p>
+            <p style="font-size:15px;">乐游宜秀</p>
+        </div>
+    </div>
+    <section class="aui-scrollView">
+        <div class="aui-palace aui-palace-one">
+            <!--轮播图-->
+            <div class="figure">
+                <!--輪播圖-->
+                <div class="container" style="width: 100%;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="carousel slide" id="demo" data-ride="carousel" data-interval="2000">
+                                <ul class="carousel-indicators">
+                                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                                    <li data-target="#demo" data-slide-to="1"></li>
+                                    <li data-target="#demo" data-slide-to="2"></li>
+                                    <li data-target="#demo" data-slide-to="3"></li>
+
+                                </ul>
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <img name="pic" src="images/dalongshan.png" style="height: 200px; width: 100%;">
+                                        <div class="carousel-caption">
+                                            <h5>大龙山风景</h5>
+                                            <p>皖事惠民 乐游宜秀 赏美景 品美食 享优惠</p>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <img name="pic" src="images/jushishan520.jpg"
+                                             style="height: 200px; width: 100%">
+                                        <div class="carousel-caption">
+                                            <h5>巨石山520风景</h5>
+                                            <p>皖事惠民 乐游宜秀 赏美景 品美食 享优惠</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="item">
+                                        <img name="pic" src="images/nanyuanshanzhuang.jpg"
+                                             style="height: 200px; width: 100%">
+                                        <div class="carousel-caption">
+                                            <h5>南园山庄风景</h5>
+                                            <p>皖事惠民 乐游宜秀 赏美景 品美食 享优惠</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="item">
+                                        <img name="pic" src="images/dangqiuqian.jpg" style="height: 200px; width: 100%">
+                                        <div class="carousel-caption">
+                                            <h5>荡秋千风景</h5>
+                                            <p>皖事惠民 乐游宜秀 赏美景 品美食 享优惠</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="left carousel-control" href="#demo" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left"><</span>
+                                </a>
+                                <a class="right carousel-control" href="#demo" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right">></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <a href="page/user/second.html?id=1" class="aui-palace-grid">
+                <div class="aui-palace-grid-icon">
+                    <img src="./images/nav-004.png" alt="">
+                </div>
+                <div class="aui-palace-grid-text">
+                    <h4>餐饮</h4>
+                </div>
+            </a>
+            <a href="page/user/second.html?id=2" class="aui-palace-grid">
+                <div class="aui-palace-grid-icon">
+                    <img src="./images/nav-005.png" alt="">
+                </div>
+                <div class="aui-palace-grid-text">
+                    <h4>景区</h4>
+                </div>
+            </a>
+            <a href="page/user/second.html?id=5" class="aui-palace-grid">
+                <div class="aui-palace-grid-icon">
+                    <img src="./images/nav-006.png" alt="">
+                </div>
+                <div class="aui-palace-grid-text">
+                    <h4>购物</h4>
+                </div>
+            </a>
+            <a href="page/user/second.html?id=3" class="aui-palace-grid">
+                <div class="aui-palace-grid-icon">
+                    <img src="./images/nav-008.png" alt="">
+                </div>
+                <div class="aui-palace-grid-text">
+                    <h4>游玩</h4>
+                </div>
+            </a>
+            <a href="page/user/second.html?id=4" class="aui-palace-grid">
+                <div class="aui-palace-grid-icon">
+                    <img src="./images/nav-010.png" alt="">
+                </div>
+                <div class="aui-palace-grid-text">
+                    <h4>酒店</h4>
+                </div>
+            </a>
+        </div>
+
+        <div id="aui-list-theme-box">
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+</section>
+</body>
+
+</html>
