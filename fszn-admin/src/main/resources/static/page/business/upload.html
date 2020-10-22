@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery图片上传</title>
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<link rel="stylesheet" type="text/css" href="../../css/base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/uploadhome.css">
+	<link href="../../css/login.css" rel="stylesheet" type="text/css"/>
+</head>
+<style>
+    .head{
+        width: 400px;
+        height: 200px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        margin: 0 auto;
+        padding: 50px;
+        position: relative;
+    }
+    .select2-selection__rendered{
+        text-align: center;
+    }
+
+</style>
+
+<body>
+
+<section class="aui-flexView">
+	<header class="aui-navBar aui-navBar-fixed">
+		<a href="myshop.html" class="aui-navBar-item">
+			<i class="icon icon-return"></i>
+		</a>
+		<div class="aui-center">
+			<span class="aui-center-title">上传</span>
+		</div>
+		<a href="javascript:;" class="aui-navBar-item"></a>
+	</header>
+	<section class="aui-scrollView">
+		<div class="aui-title-main">
+			<h2>商品属性:</h2>
+		</div>
+		<p class="aui-code-line">
+			<select name="country" class="aui-code-line-input">
+		        <option value="1">餐饮类</option>
+		        <option value="2">旅游类</option>
+		        <option value="3">住宿类</option>
+		        <option value="4">购物类</option>
+		        <option value="5">休闲类</option>
+    		</select>
+		</p>
+		<div class="aui-title-main">
+			<h2>商品名称:</h2>
+		</div>
+        <p class="aui-code-line">
+         <input type="text" class="aui-code-line-input" placeholder="请输入商品名称"/>
+        </p>
+        <div class="aui-title-main">
+			<h2>商品优惠方式:</h2>
+		</div>
+		<p class="aui-code-line">
+			<select id="preferentialWay" class="aui-code-line-input">
+		        <option value="1">打折类</option>
+		        <option value="2">满减类</option>
+		        <option value="3">无优惠</option>
+    		</select>
+		</p>
+		<div id="discountnum" style="display: block;">
+			<div class="aui-title-main">
+				<h2>折扣力度:</h2>
+			</div>
+        	<p class="aui-code-line">
+         		<input type="number" class="aui-code-line-input" placeholder="请按规定输入9,9.5等数字即可"/>
+        	</p>
+		</div>
+		<div id="reduce" style="display: none;">
+			<div class="aui-title-main">
+				<h2>满减力度:</h2>
+			</div>
+        	<p class="aui-code-line">
+         		满<input type="number" class="aui-code-line-input1" placeholder="填入所满金额" style="text-align: center;"/>元减
+         		<input type="number" class="aui-code-line-input1" placeholder="填入所减金额" style="text-align: center;"/>元
+        	</p>
+		</div>
+		<div class="aui-title-main">
+				<h2>商品状态:</h2>
+		</div>
+    	<p class="aui-code-line">
+     		<select name="country" class="aui-code-line-input">
+		        <option value="1">上架状态</option>
+		        <option value="2">下架状态</option>
+    		</select>
+    	</p>
+		<div class="aui-title-main">
+			<h2>内容</h2>
+		</div>
+		<div class='aui-textarea-wrapper'>
+			<div class='textarea-block'>
+				<textarea class="textarea-item" name="content" placeholder="请输入商品的特点等介绍内容，不超过500字。" maxlength="500" spellcheck="false"></textarea>
+				<div class="aui-textarea-count">
+					<span class="textareaInput">0</span>
+					/<span class="textareaTotal">500</span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="aui-title-main">
+			<h2>
+				上传图片 <em>最多上传9张图片</em>
+			</h2>
+		</div>
+		<div class="aui-upload-box">
+			<div class="aui-upload-pic">
+                <span id="chose_pic_btn" style="">
+                    <input type="file" accept="image/*"/>
+                </span>
+			</div>
+		</div>
+		<div class="aui-main-button">
+			<button>提交</button>
+		</div>
+	</section>
+</section>
+</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/localImg.js"></script>
+<script src="js/mobileImg.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var lenInput = $('.textarea-item').val().length;
+		$(".textarea-item").keyup(function() {
+			lenInput = $(this).val().length;
+			if (lenInput > 0 && lenInput <= 300) {
+				$('.textareaInput').html(lenInput);
+				$('.textarea-btn').attr('disabled', false);
+			} else {
+				$('.textarea-btn').attr('disabled', true);
+			}
+		});
+		
+		$("#preferentialWay").change(function(){
+  			var value = $(this).val();
+  			if(value==1){
+  				$("#reduce").css("display","none");
+  				$("#discountnum").css("display","block");
+  			}else if(value==2){
+  				$("#reduce").css("display","block");
+  				$("#discountnum").css("display","none");
+  			}else{
+  				$("#reduce").css("display","none");
+  				$("#discountnum").css("display","none");
+  			}
+		});
+	});
+	//字数限制500字
+
+	var picArr = new Array();
+	$('input:file').localResizeIMG({
+		width: 800,
+		quality: 1,
+		// 图片压缩 默认1 不压缩
+		success: function(result) {
+			var img = new Image();
+			img.src = result.base64;
+			var _str = "<span class='pic_look' style='background-image: url(" + img.src + ")'><em id='delete_pic'></em></span>"
+			$('#chose_pic_btn').before(_str);
+			var _i = picArr.length
+			picArr[_i] = result.base64;
+			console.log(picArr)
+		}
+	});
+	// 删除图片默认显示
+	$(document).on('click', '#delete_pic', function(event) {
+		var aa = $(this).parents(".pic_look").index();
+		picArr.splice(aa, 1);
+		$(this).parents(".pic_look").remove();
+		console.log(picArr);
+	});
+</script>
+</html>
