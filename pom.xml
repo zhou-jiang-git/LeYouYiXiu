@@ -209,8 +209,7 @@
 				<artifactId>fszn-activiti</artifactId>
 				<version>${fszn.version}</version>
 			</dependency>
-	        
-        </dependencies>
+		</dependencies>
     </dependencyManagement>
 
     <modules>

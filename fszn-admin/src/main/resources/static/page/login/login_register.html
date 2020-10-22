@@ -392,6 +392,7 @@
     var confirm = document.getElementsByClassName("confirm")[0]
     var confirm1 = document.getElementsByClassName("confirm")[1]
     var forgetPwd = document.getElementById("forgetPwd")
+    var phone = document.getElementById("phonenum")
     var user = document.getElementById("user")
     var passwd = document.getElementById("passwd")
     var con_pass = document.getElementById("confirm-passwd")
@@ -515,7 +516,7 @@
         $.post("/system/user/forgetPwd",{
             "user":user.value,
             "passwd": passwd.value,
-            "phone": confirm1.value,
+            "phone": phone.value,
             "token": getQueryString()["token"]
         },function (result) {
             if (result.code == 0) {

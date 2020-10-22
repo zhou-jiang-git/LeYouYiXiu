@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuBusinessMapper">
+    
+    <resultMap type="YixiuBusiness" id="YixiuBusinessResult">
+        <result property="bid"    column="bid"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="businessName"    column="business_name"    />
+        <result property="businessTitle"    column="business_title"    />
+        <result property="businessPicture"    column="business_picture"    />
+        <result property="businessIntro"    column="business_intro"    />
+        <result property="businessRegist"    column="business_regist"    />
+        <result property="businessModify"    column="business_modify"    />
+        <result property="businessStatus"    column="business_status"    />
+        <result property="businessArea"    column="business_area"    />
+        <result property="businessType"    column="business_type"    />
+        <result property="businessTrading"    column="business_trading"    />
+        <result property="businessAmount"    column="business_amount"    />
+        <result property="businessBrowse"    column="business_browse"    />
+        <result property="businessAddress"    column="business_address"    />
+    </resultMap>
+
+    <sql id="selectYixiuBusinessVo">
+        select bid, business_id, business_name, business_title, business_picture, business_intro, business_regist, business_modify, business_status, business_area, business_type, business_trading, business_amount, business_browse, business_address from yixiu_business
+    </sql>
+
+    <select id="selectYixiuBusinessList" parameterType="YixiuBusiness" resultMap="YixiuBusinessResult">
+        <include refid="selectYixiuBusinessVo"/>
+        <where>  
+            <if test="businessId != null "> and business_id = #{businessId}</if>
+            <if test="businessName != null  and businessName != ''"> and business_name like concat('%', #{businessName}, '%')</if>
+            <if test="businessTitle != null  and businessTitle != ''"> and business_title = #{businessTitle}</if>
+            <if test="businessPicture != null  and businessPicture != ''"> and business_picture = #{businessPicture}</if>
+            <if test="businessIntro != null  and businessIntro != ''"> and business_intro = #{businessIntro}</if>
+            <if test="businessRegist != null "> and business_regist = #{businessRegist}</if>
+            <if test="businessModify != null "> and business_modify = #{businessModify}</if>
+            <if test="businessStatus != null "> and business_status = #{businessStatus}</if>
+            <if test="businessArea != null  and businessArea != ''"> and business_area = #{businessArea}</if>
+            <if test="businessType != null "> and business_type = #{businessType}</if>
+            <if test="businessTrading != null "> and business_trading = #{businessTrading}</if>
+            <if test="businessAmount != null "> and business_amount = #{businessAmount}</if>
+            <if test="businessBrowse != null "> and business_browse = #{businessBrowse}</if>
+            <if test="businessAddress != null  and businessAddress != ''"> and business_address = #{businessAddress}</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuBusinessById" parameterType="Integer" resultMap="YixiuBusinessResult">
+        <include refid="selectYixiuBusinessVo"/>
+        where bid = #{bid}
+    </select>
+        
+    <insert id="insertYixiuBusiness" parameterType="YixiuBusiness" useGeneratedKeys="true" keyProperty="bid">
+        insert into yixiu_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="businessId != null ">business_id,</if>
+            <if test="businessName != null  and businessName != ''">business_name,</if>
+            <if test="businessTitle != null  and businessTitle != ''">business_title,</if>
+            <if test="businessPicture != null  and businessPicture != ''">business_picture,</if>
+            <if test="businessIntro != null  and businessIntro != ''">business_intro,</if>
+            <if test="businessRegist != null ">business_regist,</if>
+            <if test="businessModify != null ">business_modify,</if>
+            <if test="businessStatus != null ">business_status,</if>
+            <if test="businessArea != null  and businessArea != ''">business_area,</if>
+            <if test="businessType != null ">business_type,</if>
+            <if test="businessTrading != null ">business_trading,</if>
+            <if test="businessAmount != null ">business_amount,</if>
+            <if test="businessBrowse != null ">business_browse,</if>
+            <if test="businessAddress != null  and businessAddress != ''">business_address,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="businessId != null ">#{businessId},</if>
+            <if test="businessName != null  and businessName != ''">#{businessName},</if>
+            <if test="businessTitle != null  and businessTitle != ''">#{businessTitle},</if>
+            <if test="businessPicture != null  and businessPicture != ''">#{businessPicture},</if>
+            <if test="businessIntro != null  and businessIntro != ''">#{businessIntro},</if>
+            <if test="businessRegist != null ">#{businessRegist},</if>
+            <if test="businessModify != null ">#{businessModify},</if>
+            <if test="businessStatus != null ">#{businessStatus},</if>
+            <if test="businessArea != null  and businessArea != ''">#{businessArea},</if>
+            <if test="businessType != null ">#{businessType},</if>
+            <if test="businessTrading != null ">#{businessTrading},</if>
+            <if test="businessAmount != null ">#{businessAmount},</if>
+            <if test="businessBrowse != null ">#{businessBrowse},</if>
+            <if test="businessAddress != null  and businessAddress != ''">#{businessAddress},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuBusiness" parameterType="YixiuBusiness">
+        update yixiu_business
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="businessId != null ">business_id = #{businessId},</if>
+            <if test="businessName != null  and businessName != ''">business_name = #{businessName},</if>
+            <if test="businessTitle != null  and businessTitle != ''">business_title = #{businessTitle},</if>
+            <if test="businessPicture != null  and businessPicture != ''">business_picture = #{businessPicture},</if>
+            <if test="businessIntro != null  and businessIntro != ''">business_intro = #{businessIntro},</if>
+            <if test="businessRegist != null ">business_regist = #{businessRegist},</if>
+            <if test="businessModify != null ">business_modify = #{businessModify},</if>
+            <if test="businessStatus != null ">business_status = #{businessStatus},</if>
+            <if test="businessArea != null  and businessArea != ''">business_area = #{businessArea},</if>
+            <if test="businessType != null ">business_type = #{businessType},</if>
+            <if test="businessTrading != null ">business_trading = #{businessTrading},</if>
+            <if test="businessAmount != null ">business_amount = #{businessAmount},</if>
+            <if test="businessBrowse != null ">business_browse = #{businessBrowse},</if>
+            <if test="businessAddress != null  and businessAddress != ''">business_address = #{businessAddress},</if>
+        </trim>
+        where bid = #{bid}
+    </update>
+
+    <delete id="deleteYixiuBusinessById" parameterType="Integer">
+        delete from yixiu_business where bid = #{bid}
+    </delete>
+
+    <delete id="deleteYixiuBusinessByIds" parameterType="String">
+        delete from yixiu_business where bid in 
+        <foreach item="bid" collection="array" open="(" separator="," close=")">
+            #{bid}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuBusinesstypeMapper">
+    
+    <resultMap type="YixiuBusinesstype" id="YixiuBusinesstypeResult">
+        <result property="businesstypeId"    column="businessType_id"    />
+        <result property="businesstypeName"    column="businessType_name"    />
+    </resultMap>
+
+    <sql id="selectYixiuBusinesstypeVo">
+        select businessType_id, businessType_name from yixiu_businesstype
+    </sql>
+
+    <select id="selectYixiuBusinesstypeList" parameterType="YixiuBusinesstype" resultMap="YixiuBusinesstypeResult">
+        <include refid="selectYixiuBusinesstypeVo"/>
+        <where>  
+            <if test="businesstypeName != null  and businesstypeName != ''"> and businessType_name like concat('%', #{businesstypeName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuBusinesstypeById" parameterType="Integer" resultMap="YixiuBusinesstypeResult">
+        <include refid="selectYixiuBusinesstypeVo"/>
+        where businessType_id = #{businesstypeId}
+    </select>
+        
+    <insert id="insertYixiuBusinesstype" parameterType="YixiuBusinesstype" useGeneratedKeys="true" keyProperty="businesstypeId">
+        insert into yixiu_businesstype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="businesstypeName != null  and businesstypeName != ''">businessType_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="businesstypeName != null  and businesstypeName != ''">#{businesstypeName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuBusinesstype" parameterType="YixiuBusinesstype">
+        update yixiu_businesstype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="businesstypeName != null  and businesstypeName != ''">businessType_name = #{businesstypeName},</if>
+        </trim>
+        where businessType_id = #{businesstypeId}
+    </update>
+
+    <delete id="deleteYixiuBusinesstypeById" parameterType="Integer">
+        delete from yixiu_businesstype where businessType_id = #{businesstypeId}
+    </delete>
+
+    <delete id="deleteYixiuBusinesstypeByIds" parameterType="String">
+        delete from yixiu_businesstype where businessType_id in 
+        <foreach item="businesstypeId" collection="array" open="(" separator="," close=")">
+            #{businesstypeId}
+        </foreach>
+    </delete>
+    
+</mapper>

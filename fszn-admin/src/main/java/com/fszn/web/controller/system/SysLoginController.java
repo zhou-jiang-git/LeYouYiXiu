@@ -1,23 +1,11 @@
 package com.fszn.web.controller.system;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fszn.common.exception.user.UserPasswordNotMatchException;
-import com.fszn.common.json.JSON;
-import com.fszn.common.json.JSONObject;
-import com.fszn.common.utils.ServletUtils;
-import com.fszn.common.utils.http.HttpUtils;
-import com.fszn.common.utils.security.Md5Utils;
+import com.fszn.common.exception.user.ChooseRolesException;
 import com.fszn.framework.shiro.realm.MyUsernamePasswordToken;
-import com.fszn.framework.util.ShiroUtils;
-import com.fszn.system.domain.SysUser;
 import com.fszn.system.service.ISysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +16,6 @@ import com.fszn.common.core.controller.BaseController;
 import com.fszn.common.core.domain.AjaxResult;
 import com.fszn.common.utils.StringUtils;
 
-import java.util.zip.DataFormatException;
 
 /**
  * 登录验证
@@ -57,7 +44,7 @@ public class SysLoginController extends BaseController {
             try {
                 subject.login(myUsernamePasswordToken);
                 return "forward:/page/user/index.html";
-            } catch (UserPasswordNotMatchException e) {
+            } catch (ChooseRolesException e) {
                 //该用户在数据库当中注册过  商家---转发至商家登录界面
                 return "forward:/page/login/login_register.html";
             }catch (AuthenticationException  e) {

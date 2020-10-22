@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuCommodityMapper">
+    
+    <resultMap type="YixiuCommodity" id="YixiuCommodityResult">
+        <result property="commodityId"    column="commodity_id"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="discountCategoryId"    column="discount_category_id"    />
+        <result property="commodityPrice"    column="commodity_price"    />
+        <result property="commodityName"    column="commodity_name"    />
+        <result property="commodityImg"    column="commodity_img"    />
+        <result property="commodityIntro"    column="commodity_intro"    />
+        <result property="commodityInventory"    column="commodity_inventory"    />
+        <result property="commodityInventorySold"    column="commodity_inventory_sold"    />
+        <result property="commodityInventoryOnsale"    column="commodity_inventory_onsale"    />
+        <result property="commodityTypeId"    column="commodity_type_id"    />
+        <result property="discountCategoryId1"    column="discount_category_id1"    />
+        <result property="discountParameterA"    column="discount_parameter_a"    />
+        <result property="discountParameterB"    column="discount_parameter_b"    />
+        <result property="discountCategoryId2"    column="discount_category_id2"    />
+        <result property="discountParameterC"    column="discount_parameter_c"    />
+        <result property="discountParameterD"    column="discount_parameter_d"    />
+        <result property="commodityState"    column="commodity_state"    />
+        <result property="commodityPromotionStart"    column="commodity_promotion_start"    />
+        <result property="commodityPromotionEnd"    column="commodity_promotion_end"    />
+    </resultMap>
+
+    <sql id="selectYixiuCommodityVo">
+        select commodity_id, business_id, discount_category_id, commodity_price, commodity_name, commodity_img, commodity_intro, commodity_inventory, commodity_inventory_sold, commodity_inventory_onsale, commodity_type_id, discount_category_id1, discount_parameter_a, discount_parameter_b, discount_category_id2, discount_parameter_c, discount_parameter_d, commodity_state, commodity_promotion_start, commodity_promotion_end from yixiu_commodity
+    </sql>
+
+    <select id="selectYixiuCommodityList" parameterType="YixiuCommodity" resultMap="YixiuCommodityResult">
+        <include refid="selectYixiuCommodityVo"/>
+        <where>  
+            <if test="businessId != null "> and business_id = #{businessId}</if>
+            <if test="discountCategoryId != null "> and discount_category_id = #{discountCategoryId}</if>
+            <if test="commodityPrice != null "> and commodity_price = #{commodityPrice}</if>
+            <if test="commodityName != null  and commodityName != ''"> and commodity_name like concat('%', #{commodityName}, '%')</if>
+            <if test="commodityImg != null  and commodityImg != ''"> and commodity_img = #{commodityImg}</if>
+            <if test="commodityIntro != null  and commodityIntro != ''"> and commodity_intro = #{commodityIntro}</if>
+            <if test="commodityInventory != null "> and commodity_inventory = #{commodityInventory}</if>
+            <if test="commodityInventorySold != null "> and commodity_inventory_sold = #{commodityInventorySold}</if>
+            <if test="commodityInventoryOnsale != null "> and commodity_inventory_onsale = #{commodityInventoryOnsale}</if>
+            <if test="commodityTypeId != null "> and commodity_type_id = #{commodityTypeId}</if>
+            <if test="discountCategoryId1 != null "> and discount_category_id1 = #{discountCategoryId1}</if>
+            <if test="discountParameterA != null  and discountParameterA != ''"> and discount_parameter_a = #{discountParameterA}</if>
+            <if test="discountParameterB != null  and discountParameterB != ''"> and discount_parameter_b = #{discountParameterB}</if>
+            <if test="discountCategoryId2 != null "> and discount_category_id2 = #{discountCategoryId2}</if>
+            <if test="discountParameterC != null  and discountParameterC != ''"> and discount_parameter_c = #{discountParameterC}</if>
+            <if test="discountParameterD != null  and discountParameterD != ''"> and discount_parameter_d = #{discountParameterD}</if>
+            <if test="commodityState != null "> and commodity_state = #{commodityState}</if>
+            <if test="commodityPromotionStart != null "> and commodity_promotion_start = #{commodityPromotionStart}</if>
+            <if test="commodityPromotionEnd != null "> and commodity_promotion_end = #{commodityPromotionEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuCommodityById" parameterType="Integer" resultMap="YixiuCommodityResult">
+        <include refid="selectYixiuCommodityVo"/>
+        where commodity_id = #{commodityId}
+    </select>
+        
+    <insert id="insertYixiuCommodity" parameterType="YixiuCommodity" useGeneratedKeys="true" keyProperty="commodityId">
+        insert into yixiu_commodity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="businessId != null ">business_id,</if>
+            <if test="discountCategoryId != null ">discount_category_id,</if>
+            <if test="commodityPrice != null ">commodity_price,</if>
+            <if test="commodityName != null  and commodityName != ''">commodity_name,</if>
+            <if test="commodityImg != null  and commodityImg != ''">commodity_img,</if>
+            <if test="commodityIntro != null  and commodityIntro != ''">commodity_intro,</if>
+            <if test="commodityInventory != null ">commodity_inventory,</if>
+            <if test="commodityInventorySold != null ">commodity_inventory_sold,</if>
+            <if test="commodityInventoryOnsale != null ">commodity_inventory_onsale,</if>
+            <if test="commodityTypeId != null ">commodity_type_id,</if>
+            <if test="discountCategoryId1 != null ">discount_category_id1,</if>
+            <if test="discountParameterA != null  and discountParameterA != ''">discount_parameter_a,</if>
+            <if test="discountParameterB != null  and discountParameterB != ''">discount_parameter_b,</if>
+            <if test="discountCategoryId2 != null ">discount_category_id2,</if>
+            <if test="discountParameterC != null  and discountParameterC != ''">discount_parameter_c,</if>
+            <if test="discountParameterD != null  and discountParameterD != ''">discount_parameter_d,</if>
+            <if test="commodityState != null ">commodity_state,</if>
+            <if test="commodityPromotionStart != null ">commodity_promotion_start,</if>
+            <if test="commodityPromotionEnd != null ">commodity_promotion_end,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="businessId != null ">#{businessId},</if>
+            <if test="discountCategoryId != null ">#{discountCategoryId},</if>
+            <if test="commodityPrice != null ">#{commodityPrice},</if>
+            <if test="commodityName != null  and commodityName != ''">#{commodityName},</if>
+            <if test="commodityImg != null  and commodityImg != ''">#{commodityImg},</if>
+            <if test="commodityIntro != null  and commodityIntro != ''">#{commodityIntro},</if>
+            <if test="commodityInventory != null ">#{commodityInventory},</if>
+            <if test="commodityInventorySold != null ">#{commodityInventorySold},</if>
+            <if test="commodityInventoryOnsale != null ">#{commodityInventoryOnsale},</if>
+            <if test="commodityTypeId != null ">#{commodityTypeId},</if>
+            <if test="discountCategoryId1 != null ">#{discountCategoryId1},</if>
+            <if test="discountParameterA != null  and discountParameterA != ''">#{discountParameterA},</if>
+            <if test="discountParameterB != null  and discountParameterB != ''">#{discountParameterB},</if>
+            <if test="discountCategoryId2 != null ">#{discountCategoryId2},</if>
+            <if test="discountParameterC != null  and discountParameterC != ''">#{discountParameterC},</if>
+            <if test="discountParameterD != null  and discountParameterD != ''">#{discountParameterD},</if>
+            <if test="commodityState != null ">#{commodityState},</if>
+            <if test="commodityPromotionStart != null ">#{commodityPromotionStart},</if>
+            <if test="commodityPromotionEnd != null ">#{commodityPromotionEnd},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuCommodity" parameterType="YixiuCommodity">
+        update yixiu_commodity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="businessId != null ">business_id = #{businessId},</if>
+            <if test="discountCategoryId != null ">discount_category_id = #{discountCategoryId},</if>
+            <if test="commodityPrice != null ">commodity_price = #{commodityPrice},</if>
+            <if test="commodityName != null  and commodityName != ''">commodity_name = #{commodityName},</if>
+            <if test="commodityImg != null  and commodityImg != ''">commodity_img = #{commodityImg},</if>
+            <if test="commodityIntro != null  and commodityIntro != ''">commodity_intro = #{commodityIntro},</if>
+            <if test="commodityInventory != null ">commodity_inventory = #{commodityInventory},</if>
+            <if test="commodityInventorySold != null ">commodity_inventory_sold = #{commodityInventorySold},</if>
+            <if test="commodityInventoryOnsale != null ">commodity_inventory_onsale = #{commodityInventoryOnsale},</if>
+            <if test="commodityTypeId != null ">commodity_type_id = #{commodityTypeId},</if>
+            <if test="discountCategoryId1 != null ">discount_category_id1 = #{discountCategoryId1},</if>
+            <if test="discountParameterA != null  and discountParameterA != ''">discount_parameter_a = #{discountParameterA},</if>
+            <if test="discountParameterB != null  and discountParameterB != ''">discount_parameter_b = #{discountParameterB},</if>
+            <if test="discountCategoryId2 != null ">discount_category_id2 = #{discountCategoryId2},</if>
+            <if test="discountParameterC != null  and discountParameterC != ''">discount_parameter_c = #{discountParameterC},</if>
+            <if test="discountParameterD != null  and discountParameterD != ''">discount_parameter_d = #{discountParameterD},</if>
+            <if test="commodityState != null ">commodity_state = #{commodityState},</if>
+            <if test="commodityPromotionStart != null ">commodity_promotion_start = #{commodityPromotionStart},</if>
+            <if test="commodityPromotionEnd != null ">commodity_promotion_end = #{commodityPromotionEnd},</if>
+        </trim>
+        where commodity_id = #{commodityId}
+    </update>
+
+    <delete id="deleteYixiuCommodityById" parameterType="Integer">
+        delete from yixiu_commodity where commodity_id = #{commodityId}
+    </delete>
+
+    <delete id="deleteYixiuCommodityByIds" parameterType="String">
+        delete from yixiu_commodity where commodity_id in 
+        <foreach item="commodityId" collection="array" open="(" separator="," close=")">
+            #{commodityId}
+        </foreach>
+    </delete>
+    
+</mapper>

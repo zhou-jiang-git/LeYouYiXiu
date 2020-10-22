@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuDiscountCategoryMapper">
+    
+    <resultMap type="YixiuDiscountCategory" id="YixiuDiscountCategoryResult">
+        <result property="discountCategoryId"    column="discount_category_id"    />
+        <result property="discountCategoryName"    column="discount_category_name"    />
+        <result property="discountCategoryRule"    column="discount_category_rule"    />
+    </resultMap>
+
+    <sql id="selectYixiuDiscountCategoryVo">
+        select discount_category_id, discount_category_name, discount_category_rule from yixiu_discount_category
+    </sql>
+
+    <select id="selectYixiuDiscountCategoryList" parameterType="YixiuDiscountCategory" resultMap="YixiuDiscountCategoryResult">
+        <include refid="selectYixiuDiscountCategoryVo"/>
+        <where>  
+            <if test="discountCategoryName != null  and discountCategoryName != ''"> and discount_category_name like concat('%', #{discountCategoryName}, '%')</if>
+            <if test="discountCategoryRule != null "> and discount_category_rule = #{discountCategoryRule}</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuDiscountCategoryById" parameterType="Integer" resultMap="YixiuDiscountCategoryResult">
+        <include refid="selectYixiuDiscountCategoryVo"/>
+        where discount_category_id = #{discountCategoryId}
+    </select>
+        
+    <insert id="insertYixiuDiscountCategory" parameterType="YixiuDiscountCategory">
+        insert into yixiu_discount_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="discountCategoryId != null ">discount_category_id,</if>
+            <if test="discountCategoryName != null  and discountCategoryName != ''">discount_category_name,</if>
+            <if test="discountCategoryRule != null ">discount_category_rule,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="discountCategoryId != null ">#{discountCategoryId},</if>
+            <if test="discountCategoryName != null  and discountCategoryName != ''">#{discountCategoryName},</if>
+            <if test="discountCategoryRule != null ">#{discountCategoryRule},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuDiscountCategory" parameterType="YixiuDiscountCategory">
+        update yixiu_discount_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="discountCategoryName != null  and discountCategoryName != ''">discount_category_name = #{discountCategoryName},</if>
+            <if test="discountCategoryRule != null ">discount_category_rule = #{discountCategoryRule},</if>
+        </trim>
+        where discount_category_id = #{discountCategoryId}
+    </update>
+
+    <delete id="deleteYixiuDiscountCategoryById" parameterType="Integer">
+        delete from yixiu_discount_category where discount_category_id = #{discountCategoryId}
+    </delete>
+
+    <delete id="deleteYixiuDiscountCategoryByIds" parameterType="String">
+        delete from yixiu_discount_category where discount_category_id in 
+        <foreach item="discountCategoryId" collection="array" open="(" separator="," close=")">
+            #{discountCategoryId}
+        </foreach>
+    </delete>
+    
+</mapper>

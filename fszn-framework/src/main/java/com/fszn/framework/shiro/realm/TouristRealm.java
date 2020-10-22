@@ -1,6 +1,8 @@
 package com.fszn.framework.shiro.realm;
 
 
+import com.fszn.common.exception.user.ChooseRolesException;
+import com.fszn.common.exception.user.UserException;
 import com.fszn.common.exception.user.UserPasswordNotMatchException;
 import com.fszn.common.json.JSON;
 import com.fszn.common.json.JSONObject;
@@ -79,19 +81,20 @@ public class TouristRealm extends AuthorizingRealm {
                 throw new AuthenticationException();
             }
             sysUser = sysUser2.get(0);
-            if (3==sysUser.getRoles().get(0).getRoleId()) {
-                throw new UserPasswordNotMatchException();
+            if (3 == sysUser.getRoles().get(0).getRoleId()) {
+                throw new ChooseRolesException();
             }
-        } catch (UserPasswordNotMatchException e) {
-            throw new UserPasswordNotMatchException ();
-        } catch (AuthenticationException e) {
-            throw new AuthenticationException();
         } catch (Exception e) {
             log.info("对用户[" + token + "]进行登录验证..验证未通过{}", e.getMessage());
-            throw new AuthenticationException(e.getMessage(), e);
+            if (e.getClass() == ChooseRolesException.class) {
+                throw new ChooseRolesException();
+            } else {
+                throw new AuthenticationException();
+            }
         }
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(sysUser, password, getName());
-        return info;
+            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(sysUser, password, getName());
+            return info;
+
     }
 
     /**

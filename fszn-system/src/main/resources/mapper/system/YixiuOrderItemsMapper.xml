@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuOrderItemsMapper">
+    
+    <resultMap type="YixiuOrderItems" id="YixiuOrderItemsResult">
+        <result property="orderItemsId"    column="order_items_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderItemsQuantity"    column="order_items_quantity"    />
+        <result property="commodityId"    column="commodity_id"    />
+        <result property="orderItemsAmount"    column="order_items_amount"    />
+        <result property="orderItemsPreferential"    column="order_items_preferential"    />
+        <result property="orderItemsSettlement"    column="order_items_settlement"    />
+    </resultMap>
+
+    <sql id="selectYixiuOrderItemsVo">
+        select order_items_id, order_id, order_items_quantity, commodity_id, order_items_amount, order_items_preferential, order_items_settlement from yixiu_order_items
+    </sql>
+
+    <select id="selectYixiuOrderItemsList" parameterType="YixiuOrderItems" resultMap="YixiuOrderItemsResult">
+        <include refid="selectYixiuOrderItemsVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="orderItemsQuantity != null "> and order_items_quantity = #{orderItemsQuantity}</if>
+            <if test="commodityId != null "> and commodity_id = #{commodityId}</if>
+            <if test="orderItemsAmount != null "> and order_items_amount = #{orderItemsAmount}</if>
+            <if test="orderItemsPreferential != null "> and order_items_preferential = #{orderItemsPreferential}</if>
+            <if test="orderItemsSettlement != null "> and order_items_settlement = #{orderItemsSettlement}</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuOrderItemsById" parameterType="Integer" resultMap="YixiuOrderItemsResult">
+        <include refid="selectYixiuOrderItemsVo"/>
+        where order_items_id = #{orderItemsId}
+    </select>
+        
+    <insert id="insertYixiuOrderItems" parameterType="YixiuOrderItems">
+        insert into yixiu_order_items
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderItemsId != null ">order_items_id,</if>
+            <if test="orderId != null ">order_id,</if>
+            <if test="orderItemsQuantity != null ">order_items_quantity,</if>
+            <if test="commodityId != null ">commodity_id,</if>
+            <if test="orderItemsAmount != null ">order_items_amount,</if>
+            <if test="orderItemsPreferential != null ">order_items_preferential,</if>
+            <if test="orderItemsSettlement != null ">order_items_settlement,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderItemsId != null ">#{orderItemsId},</if>
+            <if test="orderId != null ">#{orderId},</if>
+            <if test="orderItemsQuantity != null ">#{orderItemsQuantity},</if>
+            <if test="commodityId != null ">#{commodityId},</if>
+            <if test="orderItemsAmount != null ">#{orderItemsAmount},</if>
+            <if test="orderItemsPreferential != null ">#{orderItemsPreferential},</if>
+            <if test="orderItemsSettlement != null ">#{orderItemsSettlement},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuOrderItems" parameterType="YixiuOrderItems">
+        update yixiu_order_items
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null ">order_id = #{orderId},</if>
+            <if test="orderItemsQuantity != null ">order_items_quantity = #{orderItemsQuantity},</if>
+            <if test="commodityId != null ">commodity_id = #{commodityId},</if>
+            <if test="orderItemsAmount != null ">order_items_amount = #{orderItemsAmount},</if>
+            <if test="orderItemsPreferential != null ">order_items_preferential = #{orderItemsPreferential},</if>
+            <if test="orderItemsSettlement != null ">order_items_settlement = #{orderItemsSettlement},</if>
+        </trim>
+        where order_items_id = #{orderItemsId}
+    </update>
+
+    <delete id="deleteYixiuOrderItemsById" parameterType="Integer">
+        delete from yixiu_order_items where order_items_id = #{orderItemsId}
+    </delete>
+
+    <delete id="deleteYixiuOrderItemsByIds" parameterType="String">
+        delete from yixiu_order_items where order_items_id in 
+        <foreach item="orderItemsId" collection="array" open="(" separator="," close=")">
+            #{orderItemsId}
+        </foreach>
+    </delete>
+    
+</mapper>

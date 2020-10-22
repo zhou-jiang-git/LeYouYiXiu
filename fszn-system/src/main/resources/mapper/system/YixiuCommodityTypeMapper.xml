@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuCommodityTypeMapper">
+    
+    <resultMap type="YixiuCommodityType" id="YixiuCommodityTypeResult">
+        <result property="commodityTypeId"    column="commodity_type_id"    />
+        <result property="commodityTypeName"    column="commodity_type_name"    />
+        <result property="commodityTypeRule"    column="commodity_type_rule"    />
+    </resultMap>
+
+    <sql id="selectYixiuCommodityTypeVo">
+        select commodity_type_id, commodity_type_name, commodity_type_rule from yixiu_commodity_type
+    </sql>
+
+    <select id="selectYixiuCommodityTypeList" parameterType="YixiuCommodityType" resultMap="YixiuCommodityTypeResult">
+        <include refid="selectYixiuCommodityTypeVo"/>
+        <where>  
+            <if test="commodityTypeName != null  and commodityTypeName != ''"> and commodity_type_name like concat('%', #{commodityTypeName}, '%')</if>
+            <if test="commodityTypeRule != null "> and commodity_type_rule = #{commodityTypeRule}</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuCommodityTypeById" parameterType="Integer" resultMap="YixiuCommodityTypeResult">
+        <include refid="selectYixiuCommodityTypeVo"/>
+        where commodity_type_id = #{commodityTypeId}
+    </select>
+        
+    <insert id="insertYixiuCommodityType" parameterType="YixiuCommodityType" useGeneratedKeys="true" keyProperty="commodityTypeId">
+        insert into yixiu_commodity_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commodityTypeName != null  and commodityTypeName != ''">commodity_type_name,</if>
+            <if test="commodityTypeRule != null ">commodity_type_rule,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commodityTypeName != null  and commodityTypeName != ''">#{commodityTypeName},</if>
+            <if test="commodityTypeRule != null ">#{commodityTypeRule},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuCommodityType" parameterType="YixiuCommodityType">
+        update yixiu_commodity_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commodityTypeName != null  and commodityTypeName != ''">commodity_type_name = #{commodityTypeName},</if>
+            <if test="commodityTypeRule != null ">commodity_type_rule = #{commodityTypeRule},</if>
+        </trim>
+        where commodity_type_id = #{commodityTypeId}
+    </update>
+
+    <delete id="deleteYixiuCommodityTypeById" parameterType="Integer">
+        delete from yixiu_commodity_type where commodity_type_id = #{commodityTypeId}
+    </delete>
+
+    <delete id="deleteYixiuCommodityTypeByIds" parameterType="String">
+        delete from yixiu_commodity_type where commodity_type_id in 
+        <foreach item="commodityTypeId" collection="array" open="(" separator="," close=")">
+            #{commodityTypeId}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -260,21 +260,24 @@ public class SysUserController extends BaseController
             String avatar = unmarshal.getStr("userId");
             SysUser sysUser = new SysUser();
             sysUser.setAvatar(avatar);
-            List<SysUser> sysUsers = userService.selectUserList(sysUser);
+            List<SysUser> sysUsers = userService.selectUserPojo(sysUser);
             if(sysUsers.size()==0){
                 return error("您目前尚未注册，请选择注册");
             }
-            if(!phone.equals(sysUsers.get(0).getPhonenumber())){
+            if(!sysUsers.get(0).getPhonenumber().equals(phone)){
                  return error("请正确输入您在皖氏通账号注册的手机号码");
             }
-            sysUser.setUserId(sysUsers.get(0).getUserId());
+            if(!sysUsers.get(0).getLoginName().equals(user)){
+                return error("请正确输入您在皖氏通账号注册的登录名");
+            }
+            sysUser=sysUsers.get(0);
             sysUser.setSalt(ShiroUtils.randomSalt());
             sysUser.setRoleId((long) 3);
             sysUser.setPassword(passwordService.encryptPassword(sysUser.getLoginName(), passwd, sysUser.getSalt()));
             userService.updateUserInfo(sysUser);
 
             //进行登录操作
-            MyUsernamePasswordToken myUsernamePasswordToken = new MyUsernamePasswordToken(user, sysUser.getPassword(), "User");
+            MyUsernamePasswordToken myUsernamePasswordToken = new MyUsernamePasswordToken(user,passwd, "User");
             Subject subject = SecurityUtils.getSubject();
             try {
                 subject.login(myUsernamePasswordToken);

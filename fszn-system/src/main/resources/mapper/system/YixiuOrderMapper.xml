@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fszn.system.mapper.YixiuOrderMapper">
+    
+    <resultMap type="YixiuOrder" id="YixiuOrderResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="touristId"    column="tourist_id"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="orderTotalAmount"    column="order_total_amount"    />
+        <result property="orderPreferentialAmount"    column="order_preferential_amount"    />
+        <result property="orderSettlementAmount"    column="order_settlement_amount"    />
+        <result property="orderGenerationTime"    column="order_generation_time"    />
+        <result property="orderItemsId"    column="order_items_id"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="orderSettlementTime"    column="order_settlement_time"    />
+    </resultMap>
+
+    <sql id="selectYixiuOrderVo">
+        select order_id, tourist_id, business_id, order_total_amount, order_preferential_amount, order_settlement_amount, order_generation_time, order_items_id, order_state, order_settlement_time from yixiu_order
+    </sql>
+
+    <select id="selectYixiuOrderList" parameterType="YixiuOrder" resultMap="YixiuOrderResult">
+        <include refid="selectYixiuOrderVo"/>
+        <where>  
+            <if test="touristId != null "> and tourist_id = #{touristId}</if>
+            <if test="businessId != null "> and business_id = #{businessId}</if>
+            <if test="orderTotalAmount != null "> and order_total_amount = #{orderTotalAmount}</if>
+            <if test="orderPreferentialAmount != null "> and order_preferential_amount = #{orderPreferentialAmount}</if>
+            <if test="orderSettlementAmount != null "> and order_settlement_amount = #{orderSettlementAmount}</if>
+            <if test="orderGenerationTime != null "> and order_generation_time = #{orderGenerationTime}</if>
+            <if test="orderItemsId != null "> and order_items_id = #{orderItemsId}</if>
+            <if test="orderState != null "> and order_state = #{orderState}</if>
+            <if test="orderSettlementTime != null "> and order_settlement_time = #{orderSettlementTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectYixiuOrderById" parameterType="Integer" resultMap="YixiuOrderResult">
+        <include refid="selectYixiuOrderVo"/>
+        where order_id = #{orderId}
+    </select>
+        
+    <insert id="insertYixiuOrder" parameterType="YixiuOrder" useGeneratedKeys="true" keyProperty="orderId">
+        insert into yixiu_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="touristId != null ">tourist_id,</if>
+            <if test="businessId != null ">business_id,</if>
+            <if test="orderTotalAmount != null ">order_total_amount,</if>
+            <if test="orderPreferentialAmount != null ">order_preferential_amount,</if>
+            <if test="orderSettlementAmount != null ">order_settlement_amount,</if>
+            <if test="orderGenerationTime != null ">order_generation_time,</if>
+            <if test="orderItemsId != null ">order_items_id,</if>
+            <if test="orderState != null ">order_state,</if>
+            <if test="orderSettlementTime != null ">order_settlement_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="touristId != null ">#{touristId},</if>
+            <if test="businessId != null ">#{businessId},</if>
+            <if test="orderTotalAmount != null ">#{orderTotalAmount},</if>
+            <if test="orderPreferentialAmount != null ">#{orderPreferentialAmount},</if>
+            <if test="orderSettlementAmount != null ">#{orderSettlementAmount},</if>
+            <if test="orderGenerationTime != null ">#{orderGenerationTime},</if>
+            <if test="orderItemsId != null ">#{orderItemsId},</if>
+            <if test="orderState != null ">#{orderState},</if>
+            <if test="orderSettlementTime != null ">#{orderSettlementTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateYixiuOrder" parameterType="YixiuOrder">
+        update yixiu_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="touristId != null ">tourist_id = #{touristId},</if>
+            <if test="businessId != null ">business_id = #{businessId},</if>
+            <if test="orderTotalAmount != null ">order_total_amount = #{orderTotalAmount},</if>
+            <if test="orderPreferentialAmount != null ">order_preferential_amount = #{orderPreferentialAmount},</if>
+            <if test="orderSettlementAmount != null ">order_settlement_amount = #{orderSettlementAmount},</if>
+            <if test="orderGenerationTime != null ">order_generation_time = #{orderGenerationTime},</if>
+            <if test="orderItemsId != null ">order_items_id = #{orderItemsId},</if>
+            <if test="orderState != null ">order_state = #{orderState},</if>
+            <if test="orderSettlementTime != null ">order_settlement_time = #{orderSettlementTime},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deleteYixiuOrderById" parameterType="Integer">
+        delete from yixiu_order where order_id = #{orderId}
+    </delete>
+
+    <delete id="deleteYixiuOrderByIds" parameterType="String">
+        delete from yixiu_order where order_id in 
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+    
+</mapper>
